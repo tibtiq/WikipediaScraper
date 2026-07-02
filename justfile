@@ -22,6 +22,24 @@ lint:
 type:
     uv run pyright .
 
+# run tests
+
+alias tests := test
+
+test target="":
+    #!/bin/bash
+    set -euo pipefail
+    IFS=$'\n\t'
+
+    uv sync --group dev
+
+    target="{{ target }}"
+    if [ -z "$target" ]; then
+        uv run pytest -s ./tests
+    else
+        uv run pytest -s "$target"
+    fi
+
 # run scraper
 run: sync
     uv run src/WikipediaScraper/wikipedia_scraper.py
