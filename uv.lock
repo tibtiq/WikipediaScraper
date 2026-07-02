@@ -370,6 +370,21 @@ wheels = [
 ]
 
 [[package]]
+name = "icecream"
+version = "2.2.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "asttokens" },
+    { name = "colorama" },
+    { name = "executing" },
+    { name = "pygments" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/10/84/6ebc95844feae8a6a29c7fd57e9e3a7ac4817ffab384dc4f0ed53b8e3c46/icecream-2.2.0.tar.gz", hash = "sha256:9d7f244187f00a13f4ac77d176990e187e9c279d6cac4f7548e338291ad97343", size = 14267, upload-time = "2026-04-03T17:42:51.387Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/7a/82/9707c7b0336bca53b75f52fc350956a93da66eb6be632b370bc933216fb4/icecream-2.2.0-py3-none-any.whl", hash = "sha256:f8df7343b3e787023eec22f42fbe4722df2f93099d394fd820b91e16b2e6cb56", size = 16707, upload-time = "2026-04-03T17:42:50.001Z" },
+]
+
+[[package]]
 name = "idna"
 version = "3.11"
 source = { registry = "https://pypi.org/simple" }
@@ -1274,6 +1289,11 @@ dependencies = [
     { name = "wordcloud" },
 ]
 
+[package.dev-dependencies]
+dev = [
+    { name = "icecream" },
+]
+
 [package.metadata]
 requires-dist = [
     { name = "bs4", specifier = ">=0.0.2" },
@@ -1285,6 +1305,9 @@ requires-dist = [
     { name = "requests", specifier = ">=2.33.0" },
     { name = "wordcloud", specifier = ">=1.9.6" },
 ]
+
+[package.metadata.requires-dev]
+dev = [{ name = "icecream", specifier = ">=2.2.0" }]
 
 [[package]]
 name = "wordcloud"

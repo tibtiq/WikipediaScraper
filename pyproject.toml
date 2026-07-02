@@ -21,3 +21,8 @@ exclude = [
     "tests",
     "build"
 ]
+
+[dependency-groups]
+dev = [
+    "icecream>=2.2.0",
+]
