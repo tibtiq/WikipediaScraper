@@ -123,5 +123,7 @@ if __name__ == "__main__":
     url = "https://en.wikipedia.org/wiki/google"
 
     # scrap and parse link
+    print("loading page")
     parsed_sections = load_page(url)
+    print("digest page")
     parsed_sections = digest_page(parsed_sections)
