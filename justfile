@@ -24,4 +24,4 @@ type:
 
 # run scraper
 run: sync
-    uv run src/wikipedia_scraper.py
+    uv run src/WikipediaScraper/wikipedia_scraper.py
