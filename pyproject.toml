@@ -15,6 +15,9 @@ dependencies = [
     "wordcloud>=1.9.6",
 ]
 
+[tool.setuptools.packages.find]
+where = ["src"]
+
 [tool.pyright]
 exclude = [
     ".venv",

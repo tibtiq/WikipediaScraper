@@ -127,3 +127,8 @@ if __name__ == "__main__":
     page = load_page(url)
     print("digest page")
     parsed_sections = digest_page(page)
+    from icecream import ic
+
+    ic.configureOutput(includeContext=True)
+    ic(len(parsed_sections))
+    ic(parsed_sections[0].keys())
