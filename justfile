@@ -26,12 +26,10 @@ type:
 
 alias tests := test
 
-test target="":
+test target="": sync
     #!/bin/bash
     set -euo pipefail
     IFS=$'\n\t'
-
-    uv sync --group dev
 
     target="{{ target }}"
     if [ -z "$target" ]; then
