@@ -124,6 +124,6 @@ if __name__ == "__main__":
 
     # scrap and parse link
     print("loading page")
-    parsed_sections = load_page(url)
+    page = load_page(url)
     print("digest page")
-    parsed_sections = digest_page(parsed_sections)
+    parsed_sections = digest_page(page)
