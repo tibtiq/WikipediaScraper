@@ -31,6 +31,7 @@ def load_page(url: str) -> list[dict]:
         f"https://en.wikipedia.org/w/api.php?action=parse&prop=tocdata&format=json&page={page_name}",
         headers=headers,
     )
+    # todo split this into two functions. Loading page is separate from reading sections
     response = response.json()["parse"]["tocdata"]["sections"]
     for section_metadata in response:
         section = dict()
