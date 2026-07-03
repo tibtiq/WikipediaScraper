@@ -6,6 +6,10 @@ import requests
 from bs4 import BeautifulSoup
 from nltk.corpus import stopwords
 
+HEADERS = {
+    "User-Agent": "Wikipedia-Scrapper (https://github.com/tibtiq/Wikipedia-Scraper; 29826331+tibtiq@users.noreply.github.com)"
+}
+
 
 def load_page(url: str) -> list[dict]:
     """Load html content from requested Wikipedia page using Wikipedia's API and separate them into sections.
@@ -17,9 +21,6 @@ def load_page(url: str) -> list[dict]:
         list[dict]: List of dictionaries. Each dictionary contains
           the parsed plain-text and hyperlinks for the section.
     """
-    headers = {
-        "User-Agent": "Wikipedia-Scrapper (https://github.com/tibtiq/Wikipedia-Scraper; 29826331+tibtiq@users.noreply.github.com)"
-    }
 
     parsed_sections = []
 
@@ -29,7 +30,7 @@ def load_page(url: str) -> list[dict]:
     # get title and index of every section of requested Wikipedia page
     response = requests.get(
         f"https://en.wikipedia.org/w/api.php?action=parse&prop=tocdata&format=json&page={page_name}",
-        headers=headers,
+        headers=HEADERS,
     )
     # todo split this into two functions. Loading page is separate from reading sections
     response = response.json()["parse"]["tocdata"]["sections"]
@@ -43,7 +44,7 @@ def load_page(url: str) -> list[dict]:
         # get html extract of page content from Wikipedia's API
         response = requests.get(
             f"https://en.wikipedia.org/w/api.php?action=parse&section={section['index']}&prop=text&format=json&page={page_name}",
-            headers=headers,
+            headers=HEADERS,
         )
         response = response.json()["parse"]["text"]["*"]
 
