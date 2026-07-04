@@ -11,7 +11,7 @@ HEADERS = {
 }
 
 
-def load_page(url: str) -> list[dict]:
+def scrape_wiki_page(url: str) -> list[dict]:
     """Load html content from requested Wikipedia page using Wikipedia's API and separate them into sections.
 
     Args:
@@ -126,7 +126,7 @@ if __name__ == "__main__":
 
     # scrap and parse link
     print("loading page")
-    page = load_page(url)
+    page = scrape_wiki_page(url)
     print("digest page")
     parsed_sections = digest_page(page)
     from icecream import ic
