@@ -17,7 +17,7 @@ def load_page(page_name: str):
     return response
 
 
-def load_section(section_index: int, page_name: str):
+def load_section(section_index: int, page_name: str) -> str:
     response = requests.get(
         f"https://en.wikipedia.org/w/api.php?action=parse&section={section_index}&prop=text&format=json&page={page_name}",
         headers=HEADERS,
