@@ -42,4 +42,4 @@ test target="": sync
 
 # run scraper
 run: sync
-    uv run src/wikipediascraper/wikipedia_scraper.py
+    uv run src/wikipediascraper/scraper.py
