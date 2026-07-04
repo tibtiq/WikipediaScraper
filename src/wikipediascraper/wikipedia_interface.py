@@ -6,7 +6,15 @@ HEADERS = {
 }
 
 
-def load_page(page_name: str):
+def load_page(page_name: str) -> dict:
+    """Load section data from Wikipedia artcle.
+
+    Args:
+        page_name (str): Wikipedia page name.
+
+    Returns:
+        dict: A dict structure containing section data for a wikipedia page.
+    """
     response = requests.get(
         f"https://en.wikipedia.org/w/api.php?action=parse&prop=tocdata&format=json&page={page_name}",
         headers=HEADERS,
