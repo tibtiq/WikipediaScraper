@@ -22,7 +22,7 @@ where = ["src"]
 package = true
 
 [tool.pytest.ini_options]
-addopts = "--cov=network_mapper --cov-report=term-missing --cov-report=html"
+addopts = "--cov=wikipediascraper --cov-report=term-missing --cov-report=html"
 
 [tool.pyright]
 exclude = [
