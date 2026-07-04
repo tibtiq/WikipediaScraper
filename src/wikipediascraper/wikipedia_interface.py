@@ -1,0 +1,29 @@
+import requests
+from bs4 import BeautifulSoup
+
+HEADERS = {
+    "User-Agent": "Wikipedia-Scrapper (https://github.com/tibtiq/Wikipedia-Scraper; 29826331+tibtiq@users.noreply.github.com)"
+}
+
+
+def load_page(page_name: str):
+    response = requests.get(
+        f"https://en.wikipedia.org/w/api.php?action=parse&prop=tocdata&format=json&page={page_name}",
+        headers=HEADERS,
+    )
+
+    response = response.json()["parse"]["tocdata"]["sections"]
+
+    return response
+
+
+def load_section(section_index: int, page_name: str):
+    response = requests.get(
+        f"https://en.wikipedia.org/w/api.php?action=parse&section={section_index}&prop=text&format=json&page={page_name}",
+        headers=HEADERS,
+    )
+    response = response.json()["parse"]["text"]["*"]
+
+    parsed_html = BeautifulSoup(response, features="lxml")
+
+    return parsed_html

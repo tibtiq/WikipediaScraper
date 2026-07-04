@@ -2,17 +2,13 @@ import re
 from collections import defaultdict
 from operator import itemgetter
 
-import requests
-from bs4 import BeautifulSoup
 from nltk.corpus import stopwords
 
-HEADERS = {
-    "User-Agent": "Wikipedia-Scrapper (https://github.com/tibtiq/Wikipedia-Scraper; 29826331+tibtiq@users.noreply.github.com)"
-}
+from wikipediascraper.wikipedia_interface import load_page, load_section
 
 
 def scrape_wiki_page(url: str) -> list[dict]:
-    """Load html content from requested Wikipedia page using Wikipedia's API and separate them into sections.
+    """Parse html content from requested Wikipedia page using Wikipedia's API and separate them into sections.
 
     Args:
         url (str): URL of requested Wikipedia page to parse
@@ -21,35 +17,19 @@ def scrape_wiki_page(url: str) -> list[dict]:
         list[dict]: List of dictionaries. Each dictionary contains
           the parsed plain-text and hyperlinks for the section.
     """
-
-    parsed_sections = []
-
-    # use Wikipedia's API to get page content
+    # todo use dataclass
     page_name = url.split("/")[-1]
-
-    # get title and index of every section of requested Wikipedia page
-    response = requests.get(
-        f"https://en.wikipedia.org/w/api.php?action=parse&prop=tocdata&format=json&page={page_name}",
-        headers=HEADERS,
-    )
-    # todo split this into two functions. Loading page is separate from reading sections
-    response = response.json()["parse"]["tocdata"]["sections"]
-    for section_metadata in response:
+    parsed_sections = []
+    page = load_page(page_name)
+    for section_metadata in page:
         section = dict()
         section["title"] = section_metadata["line"]
         section["index"] = section_metadata["index"]
         parsed_sections.append(section)
 
     for section in parsed_sections:
-        # get html extract of page content from Wikipedia's API
-        response = requests.get(
-            f"https://en.wikipedia.org/w/api.php?action=parse&section={section['index']}&prop=text&format=json&page={page_name}",
-            headers=HEADERS,
-        )
-        response = response.json()["parse"]["text"]["*"]
+        parsed_html = load_section(section["index"], page_name)
 
-        # parse html extract using BeautifulSoup
-        parsed_html = BeautifulSoup(response, features="lxml")
         text = []
         hyperlinks = []
         for p in parsed_html.find_all("p"):
