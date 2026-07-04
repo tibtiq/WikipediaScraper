@@ -20,6 +20,7 @@ def load_page(page_name: str) -> dict:
         headers=HEADERS,
     )
 
+    # todo use a dataclass
     response = response.json()["parse"]["tocdata"]["sections"]
 
     return response
