@@ -1,5 +1,9 @@
 default: sync format lint type
 
+# list avaiable just recipes
+help:
+    just --list
+
 # sync environment with project dependencies
 sync:
     uv sync
