@@ -1,6 +1,6 @@
 # todo update this
 
-from wikipedia_scraper.wikipedia_scraper import load_page
+from wikipediascraper.scraper import scrape_wiki_page
 
 
 def test_load_page():
@@ -17,7 +17,7 @@ def test_load_page():
         "title": "References",
     }
 
-    page = load_page(url)
+    page = scrape_wiki_page(url)
 
     assert len(page) == 1
     assert page[0] == expected_results
