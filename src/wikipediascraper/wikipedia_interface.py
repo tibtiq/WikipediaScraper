@@ -13,7 +13,7 @@ def load_page(page_name: str) -> dict:
         page_name (str): Wikipedia page name.
 
     Returns:
-        dict: A dict structure containing section data for a wikipedia page.
+        page (dict): A dict structure containing section data for a wikipedia page.
     """
     response = requests.get(
         f"https://en.wikipedia.org/w/api.php?action=parse&prop=tocdata&format=json&page={page_name}",
@@ -21,9 +21,9 @@ def load_page(page_name: str) -> dict:
     )
 
     # todo use a dataclass
-    response = response.json()["parse"]["tocdata"]["sections"]
+    page = response.json()["parse"]["tocdata"]["sections"]
 
-    return response
+    return page
 
 
 def load_section(section_index: int, page_name: str) -> BeautifulSoup:
