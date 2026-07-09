@@ -4,7 +4,7 @@ from operator import itemgetter
 
 from nltk.corpus import stopwords
 
-from wikipediascraper.wikipedia_interface import load_page, load_section
+from .wikipedia_interface import load_page, load_section
 
 
 def scrape_wiki_page(url: str) -> list[dict]:
