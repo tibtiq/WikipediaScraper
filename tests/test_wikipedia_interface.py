@@ -88,3 +88,14 @@ class TestLoadSection:
 
         with pytest.raises(KeyError):
             load_section(999, "Python_(programming_language)")
+
+
+@pytest.mark.integration
+def test_load_page_real_wikipedia_api():
+    page_name = "Python_(programming_language)"
+
+    result = load_page(page_name)
+
+    assert isinstance(result, list)
+    assert len(result) > 0
+    assert any(section.get("line") == "Syntax and semantics" for section in result)

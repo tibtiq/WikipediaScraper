@@ -23,6 +23,9 @@ package = true
 
 [tool.pytest.ini_options]
 addopts = "--cov=wikipediascraper --cov-report=term-missing --cov-report=html"
+markers = [
+    "integration: mark test as an integration test hitting live APIs",
+]
 
 [tool.pyright]
 exclude = [
