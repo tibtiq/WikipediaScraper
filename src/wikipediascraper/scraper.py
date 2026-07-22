@@ -83,7 +83,7 @@ def digest_page(parsed_sections: list[dict]) -> list[dict]:
             token_list = [token for token in token_list if token != stop_word]
 
         # remove punctuation
-        punctuation = list(".,'\"")
+        punctuation = list(".,!'\"")
         for i in punctuation:
             token_list = [token.replace(i, "") for token in token_list]
 
