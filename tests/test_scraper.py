@@ -1,6 +1,5 @@
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
 
-import pytest
 from bs4 import BeautifulSoup
 
 from wikipediascraper.scraper import digest_page, scrape_wiki_page
