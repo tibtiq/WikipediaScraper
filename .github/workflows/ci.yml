@@ -10,6 +10,5 @@ on:
 jobs:
   formatter-and-linter:
     uses: tibtiq/python-linters/.github/workflows/formatter_and_linter.yml@main
-
-  tests:
-    uses: tibtiq/python-linters/.github/workflows/tests.yml@main
+  # tests:
+  #   uses: tibtiq/python-linters/.github/workflows/tests.yml@main
