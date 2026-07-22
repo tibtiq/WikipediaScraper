@@ -2,13 +2,13 @@ import re
 from collections import defaultdict
 from operator import itemgetter
 
-import requests
-from bs4 import BeautifulSoup
 from nltk.corpus import stopwords
 
+from .wikipedia_interface import load_page, load_section
 
-def load_page(url: str) -> list[dict]:
-    """Load html content from requested Wikipedia page using Wikipedia's API and separate them into sections.
+
+def scrape_wiki_page(url: str) -> list[dict]:
+    """Parse html content from requested Wikipedia page using Wikipedia's API and separate them into sections.
 
     Args:
         url (str): URL of requested Wikipedia page to parse
@@ -17,37 +17,19 @@ def load_page(url: str) -> list[dict]:
         list[dict]: List of dictionaries. Each dictionary contains
           the parsed plain-text and hyperlinks for the section.
     """
-    headers = {
-        "User-Agent": "Wikipedia-Scrapper (https://github.com/tibtiq/Wikipedia-Scraper; 29826331+tibtiq@users.noreply.github.com)"
-    }
-
-    parsed_sections = []
-
-    # use Wikipedia's API to get page content
+    # todo use dataclass
     page_name = url.split("/")[-1]
-
-    # get title and index of every section of requested Wikipedia page
-    response = requests.get(
-        f"https://en.wikipedia.org/w/api.php?action=parse&prop=tocdata&format=json&page={page_name}",
-        headers=headers,
-    )
-    response = response.json()["parse"]["tocdata"]["sections"]
-    for section_metadata in response:
+    parsed_sections = []
+    page = load_page(page_name)
+    for section_metadata in page:
         section = dict()
         section["title"] = section_metadata["line"]
         section["index"] = section_metadata["index"]
         parsed_sections.append(section)
 
     for section in parsed_sections:
-        # get html extract of page content from Wikipedia's API
-        response = requests.get(
-            f"https://en.wikipedia.org/w/api.php?action=parse&section={section['index']}&prop=text&format=json&page={page_name}",
-            headers=headers,
-        )
-        response = response.json()["parse"]["text"]["*"]
+        parsed_html = load_section(section["index"], page_name)
 
-        # parse html extract using BeautifulSoup
-        parsed_html = BeautifulSoup(response, features="lxml")
         text = []
         hyperlinks = []
         for p in parsed_html.find_all("p"):
@@ -101,7 +83,7 @@ def digest_page(parsed_sections: list[dict]) -> list[dict]:
             token_list = [token for token in token_list if token != stop_word]
 
         # remove punctuation
-        punctuation = list(".,'\"")
+        punctuation = list(".,!'\"")
         for i in punctuation:
             token_list = [token.replace(i, "") for token in token_list]
 
@@ -123,5 +105,12 @@ if __name__ == "__main__":
     url = "https://en.wikipedia.org/wiki/google"
 
     # scrap and parse link
-    parsed_sections = load_page(url)
-    parsed_sections = digest_page(parsed_sections)
+    print("loading page")
+    page = scrape_wiki_page(url)
+    print("digest page")
+    parsed_sections = digest_page(page)
+    from icecream import ic
+
+    ic.configureOutput(includeContext=True)
+    ic(len(parsed_sections))
+    ic(parsed_sections[0].keys())

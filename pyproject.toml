@@ -1,5 +1,5 @@
 [project]
-name = "WikipediaScraper"
+name = "wikipediascraper"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
@@ -15,9 +15,26 @@ dependencies = [
     "wordcloud>=1.9.6",
 ]
 
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.uv]
+package = true
+
+[tool.pytest.ini_options]
+addopts = "--cov=wikipediascraper --cov-report=term-missing --cov-report=html"
+
 [tool.pyright]
 exclude = [
     ".venv",
     "tests",
     "build"
+]
+
+[dependency-groups]
+dev = [
+    "icecream>=2.2.0",
+    "pyright>=1.1.411",
+    "pytest>=9.1.1",
+    "pytest-cov>=7.1.0",
 ]

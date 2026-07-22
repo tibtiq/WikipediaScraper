@@ -1,14 +1,16 @@
 default: sync format lint type
 
+# list avaiable just recipes
+help:
+    just --list
+
 # sync environment with project dependencies
 sync:
     uv sync
-    uv pip install --editable .
 
 # update project dependencies
 update:
     uv sync --upgrade
-    uv pip install --editable .
 
 # run formatter
 format:
@@ -22,6 +24,22 @@ lint:
 type:
     uv run pyright .
 
+# run tests
+
+alias tests := test
+
+test target="": sync
+    #!/bin/bash
+    set -euo pipefail
+    IFS=$'\n\t'
+
+    target="{{ target }}"
+    if [ -z "$target" ]; then
+        uv run pytest -s ./tests
+    else
+        uv run pytest -s "$target"
+    fi
+
 # run scraper
 run: sync
-    uv run src/wikipedia_scraper.py
+    uv run -m wikipediascraper.scraper
