@@ -19,6 +19,7 @@ def load_page(page_name: str) -> dict:
         f"https://en.wikipedia.org/w/api.php?action=parse&prop=tocdata&format=json&page={page_name}",
         headers=HEADERS,
     )
+    response.raise_for_status()
 
     # todo use a dataclass
     page = response.json()["parse"]["tocdata"]["sections"]
@@ -40,6 +41,7 @@ def load_section(section_index: int, page_name: str) -> BeautifulSoup:
         f"https://en.wikipedia.org/w/api.php?action=parse&section={section_index}&prop=text&format=json&page={page_name}",
         headers=HEADERS,
     )
+    response.raise_for_status()
 
     response = response.json()["parse"]["text"]["*"]
     parsed_html = BeautifulSoup(response, features="lxml")
