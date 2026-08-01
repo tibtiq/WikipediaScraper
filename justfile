@@ -1,6 +1,6 @@
 default: sync format lint type
 
-# list avaiable just recipes
+# list available just recipes
 help:
     just --list
 
