@@ -50,8 +50,8 @@ def display_piecharts(
 
         # compute percentages to display on pie chart
         total_words = sum(word_frequencies.values())
-        for word in word_frequencies:
-            word_frequencies[word] = (word_frequencies[word] / total_words) * 100
+        for word, frequency in word_frequencies.items():
+            word_frequencies[word] = (frequency / total_words) * 100
 
         # graph pie chart
         fig = plt.figure()

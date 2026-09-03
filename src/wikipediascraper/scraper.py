@@ -22,7 +22,7 @@ def scrape_wiki_page(url: str) -> list[dict]:
     parsed_sections = []
     page = load_page(page_name)
     for section_metadata in page:
-        section = dict()
+        section = {}
         section["title"] = section_metadata["line"]
         section["index"] = section_metadata["index"]
         parsed_sections.append(section)
